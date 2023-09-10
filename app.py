@@ -38,7 +38,7 @@ def add_location():
     return jsonify({"message": "Location added successfully"})
 
 
-@app.route("/get_locations", methods=["GET"])
+#@app.route("/get_locations", methods=["GET"])
 def get_locations():
     locations = Location.query.all()
     location_list = []
@@ -50,7 +50,7 @@ def get_locations():
             "data": location.data,
         }
         location_list.append(location_data)
-    return jsonify({"locations": location_list})
+    return location_list
 
 
 @app.route("/")
@@ -58,7 +58,7 @@ def mapview():
     # creating a map in the view
     mymap = Map(identifier="view-side", lat=30, lng=-8, markers=[(37.4419, -122.1419)])
     people_locations = []
-    locations = get_locations["locations"]
+    locations = get_locations()
     for location in locations:
         people_locations.append(
             {

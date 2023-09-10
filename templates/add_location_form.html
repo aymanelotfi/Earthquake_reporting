@@ -3,22 +3,75 @@
 
 <head>
     <title>Add Location</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Add Location</h1>
-    <form method="POST" action="/add_location" enctype="multipart/form-data">
-        <label for="latitude">Latitude:</label>
-        <input type="text" id="latitude" name="latitude" required><br><br>
+    <div class="container">
+        <h1>Add Location</h1>
+        <form method="POST" action="/add_location" enctype="multipart/form-data">
+            <label for="latitude">Latitude:</label>
+            <input type="text" id="latitude" name="latitude" required placeholder="Enter Latitude">
 
-        <label for="longitude">Longitude:</label>
-        <input type="text" id="longitude" name="longitude" required><br><br>
+            <label for="longitude">Longitude:</label>
+            <input type="text" id="longitude" name="longitude" required placeholder="Enter Longitude">
 
-        <label for="data">Data:</label>
-        <input type="text" id="data" name="data" required><br><br>
+            <label for="data">Information:</label>
+            <input type="text" id="data" name="data" required placeholder="Enter Data">
 
-        <input type="submit" value="Add Location">
-    </form>
+            <input type="submit" value="Add Location">
+        </form>
+    </div>
 </body>
 
 </html>
