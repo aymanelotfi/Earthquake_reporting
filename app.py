@@ -71,7 +71,7 @@ def mapview():
         lat=30,
         lng=-8,
         markers=people_locations,
-        style="height:1200px;width:1200px;margin: auto;",
+        style="height:100vh;width:90%;margin: auto;",
         zoom=5,
     )
     return render_template("example.html", mymap=mymap, sndmap=sndmap)

@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <title>Moroccan Earthquake Reporting</title>
     <!-- Include Google Maps JavaScript API and your map-related scripts here -->
     {{ "decoupled-map"|googlemap_js(37.4419, -122.1419, markers=[(37.4419, -122.1419)]) }}
@@ -10,8 +13,10 @@
     {{ sndmap.js }}
     <style>
         /* Add your custom CSS styles here */
+		* {
+			font-family: Cairo, sans-serif;
+		}
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -64,7 +69,7 @@
     </style>
 </head>
 <body>
-    <header>
+    <header style="position: fixed; width: 100vw; top: 0; z-index: 100;">
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -73,8 +78,8 @@
             </ul>
         </nav>
     </header>
-    <h1>Moroccan Earthquake Reporting</h1>
-    <h2>You can view all people seeking help on the map.</h2>
+    <h1 style="font-size: xx-large;margin-top: 90px;">Moroccan Earthquake Reporting</h1>
+    <h2 style="font-weight: 400;">You can view all people seeking help on the map.</h2>
     <!-- Embed your map here -->
     {{ sndmap.html }}
     <footer>
