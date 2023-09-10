@@ -16,6 +16,7 @@ class Location(db.Model):
     longitude = db.Column(db.Float, nullable=False)
     date_time = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     data = db.Column(db.String(255), nullable=False)
+    phone_number = db.Column(db.String(255),nullable=False)
 
 
 @app.route("/add_location", methods=["POST"])
@@ -24,6 +25,7 @@ def add_location():
     latitude = data.get("latitude")
     longitude = data.get("longitude")
     data_str = data.get("data")
+    phone_number=data.get('phone_number')
     date = datetime.now()
 
     location = Location(
@@ -32,10 +34,11 @@ def add_location():
         longitude=longitude,
         data=data_str,
         date_time=date,
+        phone_number =phone_number
     )
     db.session.add(location)
     db.session.commit()
-    return jsonify({"message": "Location added successfully"})
+    return mapview()
 
 
 #@app.route("/get_locations", methods=["GET"])
@@ -48,6 +51,7 @@ def get_locations():
             "longitude": location.longitude,
             "date_time": location.date_time.strftime("%Y-%m-%d %H:%M:%S"),
             "data": location.data,
+            "phone_number":location.phone_number
         }
         location_list.append(location_data)
     return location_list
@@ -60,14 +64,8 @@ def mapview():
     people_locations = []
     locations = get_locations()
     for location in locations:
-        people_locations.append(
-            {
-                "icon": "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-                "lat": location["latitude"],
-                "lng": location["longitude"],
-                "infobox": location["data"],
-            }
-        )
+        people_locations.append(Marker(location['latitude'],location['longitude'],location['data'],
+                                       location['phone_number']))
     sndmap = Map(
         identifier="sndmap",
         lat=30,
@@ -84,12 +82,12 @@ def add_location_form():
     return render_template("add_location_form.html")
 
 
-def Marker(latitude, longitude, info):
+def Marker(latitude, longitude, info,phone_number):
     return {
         "icon": "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
         "lat": latitude,
         "lng": longitude,
-        "infobox": "<b>" + info + "</b>",
+        "infobox": "<b>" + info + "</b>"+"<p> Phone number: "+phone_number+"</p>",
     }
 
 

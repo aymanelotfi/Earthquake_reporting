@@ -59,19 +59,38 @@
 <body>
     <div class="container">
         <h1>Add Location</h1>
-        <form method="POST" action="/add_location" enctype="multipart/form-data">
+        <form method="POST" action="/add_location" enctype="multipart/form-data">            
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone_number" name="phone_number" required placeholder="Enter Phone Number">
+            <label for="data">Information:</label>
+            <input type="text" id="data" name="data" required placeholder="Enter Information">
+
             <label for="latitude">Latitude:</label>
-            <input type="text" id="latitude" name="latitude" required placeholder="Enter Latitude">
+            <input type="text" id="latitude" name="latitude" readonly required placeholder="Enter Latitude">
 
             <label for="longitude">Longitude:</label>
-            <input type="text" id="longitude" name="longitude" required placeholder="Enter Longitude">
-
-            <label for="data">Information:</label>
-            <input type="text" id="data" name="data" required placeholder="Enter Data">
+            <input type="text" id="longitude" name="longitude"  readonly required placeholder="Enter Longitude">
 
             <input type="submit" value="Add Location">
         </form>
     </div>
+
+    <script>
+        // Function to get the user's location
+        function getUserLocation() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById("latitude").value = position.coords.latitude;
+                    document.getElementById("longitude").value = position.coords.longitude;
+                });
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        }
+
+        // Automatically get user's location when the page loads
+        getUserLocation();
+    </script>
 </body>
 
 </html>
