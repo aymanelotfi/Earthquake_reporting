@@ -20,14 +20,18 @@ class Location(db.Model):
 
 @app.route("/add_location", methods=["POST"])
 def add_location():
-    data = request.get_json()
-    latitude = data["latitude"]
-    longitude = data["longitude"]
-    data_str = data["data"]
-    date = datetime.utcnow
+    data = request.form
+    latitude = data.get("latitude")
+    longitude = data.get("longitude")
+    data_str = data.get("data")
+    date = datetime.now()
 
     location = Location(
-        latitude=latitude, longitude=longitude, data=data_str, date_time=date
+        # id=(date - datetime(1970, 1, 1)).total_seconds(),
+        latitude=latitude,
+        longitude=longitude,
+        data=data_str,
+        date_time=date,
     )
     db.session.add(location)
     db.session.commit()
@@ -75,6 +79,11 @@ def mapview():
     return render_template("example.html", mymap=mymap, sndmap=sndmap)
 
 
+@app.route("/add_location_form", methods=["GET"])
+def add_location_form():
+    return render_template("add_location_form.html")
+
+
 def Marker(latitude, longitude, info):
     return {
         "icon": "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
@@ -83,6 +92,9 @@ def Marker(latitude, longitude, info):
         "infobox": "<b>" + info + "</b>",
     }
 
+
+with app.app_context():
+    db.create_all()
 
 if __name__ == "__main__":
     app.run(debug=True)
