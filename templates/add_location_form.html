@@ -30,6 +30,10 @@
             text-align: center;
         }
 
+        p {
+            text-align: center;
+        }
+
         label {
             display: block;
             margin-bottom: 5px;
@@ -68,6 +72,7 @@
 <body>
     <div class="container">
         <h1>إضافة موقعي</h1>
+        <p>يتم التعرف على موقعك تلقائيا</p>
         <form method="POST" action="/add_location" enctype="multipart/form-data">            
             <label for="phone">رقم الهاتف</label>
             <input type="text" id="phone_number" name="phone_number" required placeholder="ادخل رقم الهاتف">
