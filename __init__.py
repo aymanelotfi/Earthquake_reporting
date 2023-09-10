@@ -3,7 +3,7 @@ from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
 
 app = Flask(__name__)
-GoogleMaps(app)
+GoogleMaps(app, key="AIzaSyBJP7ueb4OId5v5Mh4lzNH2k6zX9v6mcsA")
 
 @app.route("/")
 def mapview():
