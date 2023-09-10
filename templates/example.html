@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moroccan Earthquake Reporting</title>
+    <title>تحديثات مباشرة عن موقع المتضررين بالزلزال</title>
     <!-- Include Google Maps JavaScript API and your map-related scripts here -->
     {{ "decoupled-map"|googlemap_js(37.4419, -122.1419, markers=[(37.4419, -122.1419)]) }}
     {{ mymap.js }}
@@ -14,6 +14,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            text-align: right;
         }
 
         header {
@@ -67,18 +68,18 @@
     <header>
         <nav>
             <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/add_location_form">Add Location</a></li>
-                <li><a href="#">About</a></li>
+                <li><a href="/">الصفحة الرئيسية</a></li>
+                <li><a href="/add_location_form">إضافة موقعي</a></li>
+                <li><a href="#">من نحن</a></li>
             </ul>
         </nav>
     </header>
-    <h1>Moroccan Earthquake Reporting</h1>
-    <h2>You can view all people seeking help on the map.</h2>
+    <h1>تحديثات مباشرة عن موقع المتضررين بالزلزال</h1>
+    <h2>يمكنك رؤية جميع الأشخاص الباحثين عن المساعدة على الخريطة</h2>
     <!-- Embed your map here -->
     {{ sndmap.html }}
     <footer>
-        <p>&copy; 2023 Moroccan Earthquake Reporting</p>
+        <p>&copy;  2023 موقعي</p>
     </footer>
 </body>
 </html>
