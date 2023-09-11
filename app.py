@@ -80,7 +80,9 @@ def mapview():
 @app.route("/add_location_form", methods=["GET"])
 def add_location_form():
     return render_template("add_location_form.html")
-
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 def Marker(latitude, longitude, info,phone_number):
     return {
