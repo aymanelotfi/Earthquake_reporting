@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
+import pandas as pd 
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///locations.db"
@@ -64,16 +65,18 @@ def mapview():
     people_locations = []
     locations = get_locations()
     for location in locations:
-        people_locations.append(Marker(location['latitude'],location['longitude'],location['data'],
+        people_locations.append(Marker_user(location['latitude'],location['longitude'],location['data'],
                                        location['phone_number']))
-
+    douars_locations = pd.read_csv('Douars_50km.csv')
+    for i in range(len(douars_locations)):
+        people_locations.append(Marker_douar(douars_locations.iloc[i]['Y'],douars_locations.iloc[i]['X'],douars_locations.iloc[i]['Name']))
     sndmap = Map(
         identifier="sndmap",
         lat=30,
         lng=-8,
         markers=people_locations,
         style="height:100vh;width:90%;margin: auto;",
-        zoom=5,
+        zoom=8,
     )
     return render_template("example.html", mymap=mymap, sndmap=sndmap)
 
@@ -88,12 +91,19 @@ def manuel_filling():
 def about():
     return render_template("about.html")
 
-def Marker(latitude, longitude, info,phone_number):
+def Marker_user(latitude, longitude, info,phone_number):
     return {
         "icon": "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
         "lat": latitude,
         "lng": longitude,
         "infobox": "<b>" + info + "</b>"+"<p> Phone number: "+phone_number+"</p>",
+    }
+def Marker_douar(latitude, longitude, info):
+    return {
+        "icon": "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+        "lat": latitude,
+        "lng": longitude,
+        "infobox": "<b>" + info + "</b>",
     }
 
 

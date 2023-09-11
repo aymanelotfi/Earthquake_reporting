@@ -3,4 +3,5 @@ SQLAlchemy==1.4
 flask_googlemaps==0.4.1
 Flask-SQLAlchemy
 gunicorn
+pandas
 git+https://github.com/flask-extensions/Flask-GoogleMaps
