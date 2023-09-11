@@ -81,6 +81,9 @@ def mapview():
 @app.route("/add_location_form", methods=["GET"])
 def add_location_form():
     return render_template("add_location_form.html")
+@app.route("/manuel_filling",methods = ["GET"])
+def manuel_filling():
+    return render_template("manuel.html")
 @app.route("/about")
 def about():
     return render_template("about.html")
