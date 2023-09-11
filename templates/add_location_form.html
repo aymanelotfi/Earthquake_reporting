@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 
 <head>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Location</title>
+    <title>إضافة موقعي</title>
     <style>
 		* {
 			font-family: Cairo, sans-serif;
@@ -20,6 +21,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            text-align: right;
         }
 
         .container {
@@ -43,9 +45,17 @@
             text-align: center;
         }
 
+        p {
+            text-align: center;
+        }
+
         label {
             display: block;
             margin-bottom: 5px;
+        }
+
+        input::placeholder  {
+            text-align: right;
         }
 
         input[type="text"] {
@@ -55,6 +65,7 @@
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            
         }
 
         input[type="submit"] {
@@ -78,25 +89,28 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
+
+        
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Add Location</h1>
+        <h1>إضافة موقعي</h1>
+        <p>يتم التعرف على موقعك تلقائيا</p>
         <form method="POST" action="/add_location" enctype="multipart/form-data">            
-            <label for="phone">Phone Number</label>
-            <input type="text" id="phone_number" name="phone_number" required placeholder="Enter Phone Number">
-            <label for="data">Information:</label>
-            <input type="text" id="data" name="data" required placeholder="Enter Information">
+            <label for="phone">رقم الهاتف</label>
+            <input type="text" id="phone_number" name="phone_number" required placeholder="ادخل رقم الهاتف">
+            <label for="data">معلومات</label>
+            <input type="text" id="data" name="data" required placeholder="أدخل المعلومات">
 
-            <label for="latitude">Latitude:</label>
-            <input type="text" id="latitude" name="latitude" readonly required placeholder="Enter Latitude">
+            <label for="latitude">خط العرض</label>
+            <input type="text" id="latitude" name="latitude" readonly required placeholder="أدخل خط العرض">
 
-            <label for="longitude">Longitude:</label>
-            <input type="text" id="longitude" name="longitude"  readonly required placeholder="Enter Longitude">
+            <label for="longitude">خط الطول</label>
+            <input type="text" id="longitude" name="longitude"  readonly required placeholder="أدخل خط الطول">
 
-            <input type="submit" value="Add Location">
+            <input class="submit" type="submit" value="رقم الهاتف">
         </form>
     </div>
 
