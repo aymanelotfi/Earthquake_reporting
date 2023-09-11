@@ -67,7 +67,7 @@ def mapview():
         people_locations.append(Marker(location['latitude'],location['longitude'],location['data'],
                                        location['phone_number']))
         people_locations.append(Marker(31.521136657176655, -8.054544987932452,"Please Help me!","0752118991"))
-        people_locations.append(Marker(30.521136657176655, -8.054544987932452,"3afakoum jiw db!","066861322"))
+        people_locations.append(Marker(30.521136657176655, -8.054544987932452," ! محتاجين الماء ","066861322"))
         people_locations.append(Marker(32.521136657176655, -8.054544987932452,"Please!","045666666"))
 
     sndmap = Map(
