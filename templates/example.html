@@ -8,9 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <title>تحديثات مباشرة عن موقع المتضررين بالزلزال</title>
     <!-- Include Google Maps JavaScript API and your map-related scripts here -->
-    {{ "decoupled-map"|googlemap_js(37.4419, -122.1419, markers=[(37.4419, -122.1419)]) }}
-    {{ mymap.js }}
-    {{ sndmap.js }}
     <style>
         /* Add your custom CSS styles here */
 		* {
@@ -55,12 +52,6 @@
             margin-top: 10px;
         }
 
-        /* Style your map container here */
-        {{ sndmap.html }} {
-            width: 100%;
-            height: 400px; /* Adjust the height as needed */
-        }
-
         footer {
             background-color: #333;
             color: #fff;
@@ -83,7 +74,7 @@
     <h1 style="font-size: xx-large;margin-top: 90px;">تحديثات مباشرة عن موقع المتضررين بالزلزال</h1>
     <h2 style="font-weight: 400;">يمكنك رؤية جميع الأشخاص الباحثين عن المساعدة على الخريطة</h2>
     <!-- Embed your map here -->
-    {{ sndmap.html }}
+    {{ map|safe }}
     <footer>
         <p>&copy;  2023  موقع المتضررين بالزلزال</p>
     </footer>

@@ -1,14 +1,16 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_googlemaps import GoogleMaps
-from flask_googlemaps import Map
+#from flask_googlemaps import GoogleMaps
+#from flask_googlemaps import Map
 import pandas as pd 
+import folium
+from folium import plugins
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///locations.db"
 db = SQLAlchemy(app)
-GoogleMaps(app, key="AIzaSyBJP7ueb4OId5v5Mh4lzNH2k6zX9v6mcsA")
+
 
 
 class Location(db.Model):
@@ -60,25 +62,64 @@ def get_locations():
 
 @app.route("/")
 def mapview():
+    m = folium.Map(
+    location=[31.228674, -7.992047],
+    zoom_start=8.5,
+    min_zoom=8.5,
+    max_lat=35.628674,
+    min_lat=29.628674,
+    max_lon=-4.992047,
+    min_lon=-10.992047,
+    max_bounds=True,
+)
+    plugins.Geocoder(
+    collapsed=False,
+    position="topright",
+    placeholder="Search | البحث",
+    ).add_to(m)
+
+
+    plugins.Fullscreen(
+    position='topright',
+    title='Expand me | تكبير الخريطة',
+    title_cancel='Exit me | تصغير الخريطة',
+    force_separate_button=True
+    ).add_to(m)
+    tileurl = 'https://api.mapbox.com/styles/v1/phd2020/clmer2mra01d001pbgjkictpt/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoicGhkMjAyMCIsImEiOiJja29lZzFwZmUwNHkzMm5wMjZnYjVvcGltIn0.tE0ritrelQOyLdKUH6hgOw'
+
+    folium.TileLayer(
+        tiles = tileurl,
+        attr = 'Satellite View',
+        name = 'Satellite View | عرض القمر الصناعي',
+        overlay = False,
+        control = True
+       ).add_to(m)
+    folium.LayerControl().add_to(m)
+
+
     # creating a map in the view
-    mymap = Map(identifier="view-side", lat=30, lng=-8, markers=[(37.4419, -122.1419)])
-    people_locations = []
+    #mymap = Map(identifier="view-side", lat=30, lng=-8, markers=[(37.4419, -122.1419)])
+
     locations = get_locations()
-    for location in locations:
-        people_locations.append(Marker_user(location['latitude'],location['longitude'],location['data'],
-                                       location['phone_number']))
+    # for location in locations:
+    #     people_locations.append(Marker_user(location['latitude'],location['longitude'],location['data'],
+    #                                    location['phone_number']))
     douars_locations = pd.read_csv('Douars_50km.csv')
     for i in range(len(douars_locations)):
-        people_locations.append(Marker_douar(douars_locations.iloc[i]['Y'],douars_locations.iloc[i]['X'],douars_locations.iloc[i]['Name']))
-    sndmap = Map(
-        identifier="sndmap",
-        lat=30,
-        lng=-8,
-        markers=people_locations,
-        style="height:100vh;width:90%;margin: auto;",
-        zoom=8,
-    )
-    return render_template("example.html", mymap=mymap, sndmap=sndmap)
+        folium.Marker(
+        location=[douars_locations.iloc[i]['Y'], douars_locations.iloc[i]['X']],
+        popup=douars_locations.iloc[i]['Name'],
+         icon= folium.Icon(color='red')
+        ).add_to(m)
+    for location in locations:
+        folium.Marker(
+        location=[location['latitude'], location['longitude']],
+        popup=(location['data']+"</b>"+"<p> Phone number: "+location['phone_number']+"</p>"),
+        icon= folium.Icon(color='blue')
+        ).add_to(m)
+
+        
+    return render_template("example.html",map=m._repr_html_())
 
 
 @app.route("/add_location_form", methods=["GET"])
@@ -90,22 +131,6 @@ def manuel_filling():
 @app.route("/about")
 def about():
     return render_template("about.html")
-
-def Marker_user(latitude, longitude, info,phone_number):
-    return {
-        "icon": "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-        "lat": latitude,
-        "lng": longitude,
-        "infobox": "<b>" + info + "</b>"+"<p> Phone number: "+phone_number+"</p>",
-    }
-def Marker_douar(latitude, longitude, info):
-    return {
-        "icon": "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-        "lat": latitude,
-        "lng": longitude,
-        "infobox": "<b>" + info + "</b>",
-    }
-
 
 with app.app_context():
     db.create_all()
